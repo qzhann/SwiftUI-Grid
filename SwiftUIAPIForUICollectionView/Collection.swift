@@ -1,5 +1,5 @@
 //
-//  Flow.swift
+//  Collection.swift
 //  SwiftUIAPIForUICollectionView
 //
 //  Created by Zihan Qi on 3/24/20.
@@ -8,13 +8,15 @@
 
 import SwiftUI
 
-struct Flow<Content: View>: UIViewRepresentable {
+/// The SwiftUI API for UICollectionView.
+struct Collection<Content: View>: UIViewRepresentable {
     let content: Content
-    //let collectionViewLayout: UICollectionViewCompositionalLayout!
+//    let collectionViewLayout: UICollectionViewCompositionalLayout!
     
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
+    
+//    init<Data, ID, CellContent>(_ data: Data, id: KeyPath<Data.Element, ID>, @ViewBuilder cellContent: () -> Content) {
+//        self.content = content()
+//    }
     
     func makeUIView(context: Context) -> UICollectionView {
         return UICollectionView()
@@ -27,7 +29,7 @@ struct Flow<Content: View>: UIViewRepresentable {
 
 //struct Flow_Previews: PreviewProvider {
 //    static var previews: some View {
-//        Flow {
+//        Collection {
 //            VStack {
 //                Text("a")
 //                Text("b")

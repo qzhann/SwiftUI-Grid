@@ -10,8 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello")
-            .frame(width: .fractional(1), height: .exactly(44))
+        Text("a")
     }
 }
 
