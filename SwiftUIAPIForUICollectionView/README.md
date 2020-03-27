@@ -3,8 +3,10 @@
 This project creates a Flow struct, which creates a UICollectionView equivalent in SwiftUI.
 
 ### To Do: ###
-1. Create different initializers for Flow.
-2.
+1. Create .frame(width:height:) modifier on Flow.
+2. Prase cellContent to allow SwiftUI view to be displayed in each collection view cell.
+3. Create different initializers for Flow. Allow Flow to contain ForEach and FlowSection.
+4. Allow .frame(width:height:) modifier to be modified on each cell / ForEach / FlowSection.
 
 
 
