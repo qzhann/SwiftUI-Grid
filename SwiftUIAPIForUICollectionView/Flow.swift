@@ -8,19 +8,13 @@
 
 import SwiftUI
 
-
 /// The SwiftUI API for UICollectionView.
-struct Flow<Content, Data> where Content: View, Data: RandomAccessCollection, Data.Element: Identifiable {
+struct Flow<Data> where Data: RandomAccessCollection, Data.Element: Identifiable {
     
     // MARK: Instance properties
     
-    private var content: Content
     @State private var data: Data!  // FIXME: This may cause problems because we may have triggered @State to emit changes during initialization, thus calling updateUIView too early.
     var sections = [0]
-    
-    // FIXME: This might cause problems.
-    // The purpose of this line is to allow construction of Flow without the generics triangular brackets
-    typealias Content = EmptyView
     
     
     // MARK: - Initializers
@@ -46,7 +40,6 @@ struct Flow<Content, Data> where Content: View, Data: RandomAccessCollection, Da
         /// [.frame(width: .defaultWidth, height: .defaultHeight)]
         /// ```
     init<CellContent>(_ data: Data, @ViewBuilder cellContent: @escaping (Data.Element) -> CellContent) where Data: RandomAccessCollection, CellContent: View, Data.Element: Identifiable {
-        self.content = EmptyView() as! Content
         self.data = data
     }
     

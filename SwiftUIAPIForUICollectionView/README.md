@@ -16,7 +16,7 @@ This project creates a Flow struct, which creates a UICollectionView equivalent 
     
 3. Unable to use NSDiffableDataSource directly for each Identifiable element.
 
-4. 
+4. Should we be using a UICollectionView or a UICollectionViewController? Because UICollectionViewController might be able to scale its own frame properly!
 
 
 

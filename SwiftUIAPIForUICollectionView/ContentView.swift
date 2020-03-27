@@ -8,13 +8,21 @@
 
 import SwiftUI
 
+struct TemporaryItem: Identifiable {
+    var id = UUID()
+    var text: String
+    
+    static var testItems: [TemporaryItem] {
+        let numbers = Array(0..<94)
+        return numbers.map { TemporaryItem(text: "\($0)") }
+    }
+}
+
 struct ContentView: View {
     var body: some View {
-        List {
-            Text("a")
-            Text("b")
+        Flow(TemporaryItem.testItems) { item in
+            Text(item.text)
         }
-    .frame(width: 250, height: 300)
     }
 }
 
