@@ -25,7 +25,7 @@ struct ContentView: View {
         Flow(TemporaryItem.testItems) { item in
             Text(item.text)
         }
-        .frame(height: 300)
+        .frame(width: .fractionalWidth(0.5), height: .fractionalWidth(0.5))
     }
 }
 

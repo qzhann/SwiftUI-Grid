@@ -31,26 +31,6 @@ struct FlowSection<Content: View>: View {
  
  */
 
-
-// MARK: - Flow Item
-
-/// A wrapper around a collection cell, storing its width and height layout dimension information.
-fileprivate struct FlowItem<Content: View>: View {
-    let content: Content
-    let widthDimension: FlowLayoutDimension
-    let heightDimension: FlowLayoutDimension
-    
-    init(content: Content, width: FlowLayoutDimension, height: FlowLayoutDimension) {
-        self.content = content
-        self.widthDimension = width
-        self.heightDimension = height
-    }
-    
-    var body: some View {
-        content
-    }
-}
-
 // MARK: - Flow layout dimension
 
 /// Describes the layout dimension of each cell in a Flow. Similar to NSCollectionLayoutDimension.
@@ -112,31 +92,35 @@ extension NSCollectionLayoutDimension {
             fatalError("Layout dimension conversion incorrect.")
         }
     }
- }
-
-// MARK: - Flow layout frame modifier
-
-fileprivate struct CollectionLayoutFrameModifier: ViewModifier {
-    var widthDimension: FlowLayoutDimension
-    var heightDimension: FlowLayoutDimension
-    
-    init(width: FlowLayoutDimension, height: FlowLayoutDimension) {
-        self.widthDimension = width
-        self.heightDimension = height
-    }
-    
-    func body(content: Content) -> some View {
-        FlowItem(content: content, width: widthDimension, height: heightDimension)
-    }
 }
 
-extension View {
+extension Flow {
     
     /// A view modifier that specifies the layout dimensions in a Flow.
     /// - Parameters:
     ///   - width: The width dimension.
     ///   - height: The height dimension.
-    func frame(width: FlowLayoutDimension, height: FlowLayoutDimension) -> some View {
-        self.modifier(CollectionLayoutFrameModifier(width: width, height: height))
+    func frame(width: FlowLayoutDimension, height: FlowLayoutDimension) -> Flow {
+        let modifiedFlow = Flow(self.data, widthDimension: width, heightDimension: height, cellContentProvider: self.cellContentProvider)
+        return modifiedFlow
     }
 }
+
+//// MARK: - Flow Item
+//
+///// A wrapper around a collection cell, storing its width and height layout dimension information.
+//fileprivate struct FlowItem<Content: View>: View {
+//    let content: Content
+//    let widthDimension: FlowLayoutDimension
+//    let heightDimension: FlowLayoutDimension
+//
+//    init(content: Content, width: FlowLayoutDimension, height: FlowLayoutDimension) {
+//        self.content = content
+//        self.widthDimension = width
+//        self.heightDimension = height
+//    }
+//
+//    var body: some View {
+//        content
+//    }
+//}
