@@ -9,16 +9,17 @@
 import SwiftUI
 
 /// The SwiftUI API for UICollectionView.
-struct Flow<Data> where Data: RandomAccessCollection, Data.Element: Identifiable {
-    
+struct Flow<Data>: UIViewRepresentable where Data: RandomAccessCollection, Data.Element: Identifiable {
+
     // MARK: Instance properties
-    
-    @State private var data: Data!  // FIXME: This may cause problems because we may have triggered @State to emit changes during initialization, thus calling updateUIView too early.
+
+    private var data: Data  // FIXME: Need to find a way to make SwiftUI call updateUIView when the data changes. (@State simply won't compile)
+                            // Consider using a wrapper class, who will emit changes once its data content willChange.
     var sections = [0]
-    
-    
+
+
     // MARK: - Initializers
-        
+
     /// Step 0 initializer.
         /// Usage:
         /// ```
@@ -29,8 +30,8 @@ struct Flow<Data> where Data: RandomAccessCollection, Data.Element: Identifiable
     //    init<Data, CellContent>(_ data: Data, @ViewBuilder cellContent: @escaping (Data.Element) -> CellContent) where Data: RandomAccessCollection, CellContent: View, Data.Element: Identifiable {
     //        self.content = EmptyView() as! Content
     //    }
-    
-    
+
+
     /// Step 1 initializer.
         /// Usage:
         /// ```
@@ -42,9 +43,9 @@ struct Flow<Data> where Data: RandomAccessCollection, Data.Element: Identifiable
     init<CellContent>(_ data: Data, @ViewBuilder cellContent: @escaping (Data.Element) -> CellContent) where Data: RandomAccessCollection, CellContent: View, Data.Element: Identifiable {
         self.data = data
     }
-    
+
     // MARK: - Instance methods
-    
+
     /// Creates a simple flow layout using the specified width and height dimensions for each cell.
     /// - Parameters:
     ///   - widthDimension: The width dimension for each cell.
@@ -59,15 +60,10 @@ struct Flow<Data> where Data: RandomAccessCollection, Data.Element: Identifiable
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
-        
+
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
-}
-
-// MARK: - UIViewRepresentable
-
-extension Flow: UIViewRepresentable {
     
     /// Responsible for storing the collection view diffable data source.
     class Coordinator: NSObject {
@@ -93,9 +89,9 @@ extension Flow: UIViewRepresentable {
         collectionView.register(TemporaryCell.self, forCellWithReuseIdentifier: TemporaryCell.reuseIdentifier)
         
         // Sets up the diffable data source and store in the coordinator.
-        context.coordinator.dataSource = UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>(collectionView: collectionView) { (collectionView, indexPath, id) -> UICollectionViewCell? in
+        context.coordinator.dataSource = UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>(collectionView: collectionView) { (collectionView, indexPath, wrapper) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TemporaryCell.reuseIdentifier, for: indexPath) as? TemporaryCell else { fatalError("Could not create new cell") }
-            
+            // FIXME: Configure the cell using the data source
             return cell
         }
         
@@ -116,6 +112,9 @@ extension Flow: UIViewRepresentable {
         context.coordinator.dataSource.apply(snapshot, animatingDifferences: animated)
     }
 }
+
+
+// MARK: - UIViewRepresentable
 
 /// A wrapper struct that conforms to Hashable, with an Identifiable content.
 struct HashableWrapper<Content>: Hashable where Content: Identifiable {

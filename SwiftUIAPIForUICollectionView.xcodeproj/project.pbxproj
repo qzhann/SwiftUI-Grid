@@ -16,6 +16,7 @@
 		F6780F3F242B1EC4009311D4 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F3E242B1EC4009311D4 /* Flow.swift */; };
 		F6780F41242B2C7F009311D4 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F40242B2C7F009311D4 /* CompositionalLayout.swift */; };
 		F6780F43242C987F009311D4 /* TemporaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F42242C987F009311D4 /* TemporaryCell.swift */; };
+		F6780F46242DA2DA009311D4 /* TestFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F45242DA2DA009311D4 /* TestFlow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		F6780F40242B2C7F009311D4 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
 		F6780F42242C987F009311D4 /* TemporaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryCell.swift; sourceTree = "<group>"; };
 		F6780F44242D8C74009311D4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
+		F6780F45242DA2DA009311D4 /* TestFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFlow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				F6780F2A242B1E5F009311D4 /* SceneDelegate.swift */,
 				F6780F2C242B1E5F009311D4 /* ContentView.swift */,
 				F6780F3E242B1EC4009311D4 /* Flow.swift */,
+				F6780F45242DA2DA009311D4 /* TestFlow.swift */,
 				F6780F42242C987F009311D4 /* TemporaryCell.swift */,
 				F6780F40242B2C7F009311D4 /* CompositionalLayout.swift */,
 				F6780F2E242B1E61009311D4 /* Assets.xcassets */,
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6780F41242B2C7F009311D4 /* CompositionalLayout.swift in Sources */,
+				F6780F46242DA2DA009311D4 /* TestFlow.swift in Sources */,
 				F6780F29242B1E5F009311D4 /* AppDelegate.swift in Sources */,
 				F6780F3F242B1EC4009311D4 /* Flow.swift in Sources */,
 				F6780F2B242B1E5F009311D4 /* SceneDelegate.swift in Sources */,

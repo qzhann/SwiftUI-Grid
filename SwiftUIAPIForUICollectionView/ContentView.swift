@@ -16,6 +16,8 @@ struct TemporaryItem: Identifiable {
         let numbers = Array(0..<94)
         return numbers.map { TemporaryItem(text: "\($0)") }
     }
+    
+    static var simpleTestItems: [TemporaryItem] = [TemporaryItem(text: "1")]
 }
 
 struct ContentView: View {
