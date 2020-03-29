@@ -13,19 +13,31 @@ struct TemporaryItem: Identifiable {
     var text: String
     
     static var testItems: [TemporaryItem] {
-        let numbers = Array(0..<94)
+        let numbers = Array(0..<940)
         return numbers.map { TemporaryItem(text: "\($0)") }
     }
     
-    static var simpleTestItems: [TemporaryItem] = [TemporaryItem(text: "1")]
+    static var simpleTestItems: [TemporaryItem] = [
+        TemporaryItem(text: "1"),
+        TemporaryItem(text: "2"),
+        TemporaryItem(text: "3")
+    ]
 }
 
 struct ContentView: View {
+    var simpleTestItems: [TemporaryItem] = [TemporaryItem(text: "1")]
     var body: some View {
         Flow(TemporaryItem.testItems) { item in
-            Text(item.text)
+            VStack {
+                Text(item.text)
+                .padding()
+                .background(Color.blue)
+            }
+            
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                
         }
-        .frame(width: .fractionalWidth(0.5), height: .fractionalWidth(0.5))
+        .frame(width: .fractionalWidth(0.2), height: .fractionalWidth(0.2))
     }
 }
 

@@ -47,25 +47,12 @@ struct Flow<Data, CellContent>: CompositionalLayoutApplicable where Data: Random
 
 // MARK: - UIViewRepresentable
 
-/// A wrapper struct that conforms to Hashable, with an Identifiable content.
-struct HashableWrapper<Content>: Hashable where Content: Identifiable {
-    
-    let content: Content
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(content.id)
-    }
-    
-    static func == (lhs: HashableWrapper<Content>, rhs: HashableWrapper<Content>) -> Bool {
-        return lhs.content.id == rhs.content.id
-    }
-}
-
 extension Flow: UIViewRepresentable {
     
     /// Responsible for storing the collection view diffable data source.
     class Coordinator: NSObject {
         var parent: Flow
+        var cellWrapperControllers: [UIViewController] = []
         var dataSource: UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>!
         
         init(_ parent: Flow) {
@@ -82,13 +69,16 @@ extension Flow: UIViewRepresentable {
         // Creates the UICollectionView
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .black
-        collectionView.register(TemporaryCell.self, forCellWithReuseIdentifier: TemporaryCell.reuseIdentifier)
+        // FIXME: This should respect .background() modifier if it exists
+        collectionView.backgroundColor = .systemBackground
+        collectionView.register(WrapperCell<CellContent>.self, forCellWithReuseIdentifier: kWrapperCellReuseIdentifier)
         
         // Sets up the diffable data source and store in the coordinator.
-        context.coordinator.dataSource = UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>(collectionView: collectionView) { (collectionView, indexPath, wrapper) -> UICollectionViewCell? in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TemporaryCell.reuseIdentifier, for: indexPath) as? TemporaryCell else { fatalError("Could not create new cell") }
-            cell.configure(using: "\(wrapper.content.id)")
+        context.coordinator.dataSource = UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>(collectionView: collectionView) { (collectionView, indexPath, dataWrapper) -> UICollectionViewCell? in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWrapperCellReuseIdentifier, for: indexPath) as? WrapperCell<CellContent> else { fatalError("Could not dequeue cell") }
+            // Sets the content by using the cell content provider on the current model data
+            cell.setContent(self.cellContentProvider(dataWrapper.content))
             return cell
         }
         
