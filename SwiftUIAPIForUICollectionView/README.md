@@ -3,19 +3,20 @@
 This project creates a Flow struct, which creates a UICollectionView equivalent in SwiftUI.
 
 ### To Do: ###
-1. Allow .frame(width:height) modifier to be used on each cell in a step 1.
-2. Create different initializers for Flow. Allow Flow to contain ForEach and FlowSection.
-3. Allow .frame(width:height:) modifier to be modified on each cell / ForEach / FlowSection.
-4. Allow Flow to dynamically handle data changes: fluid content changing handling
+1. Create different initializers for Flow. Allow Flow to contain ForEach and FlowSection.
+2. Allow .frame(width:height:) modifier to be modified on each cell / ForEach / FlowSection.
+3. Allow Flow to dynamically handle data changes: fluid content changing handling
 
 
 
 ### Problems Encountered: ###
 1. `Section` cannot be extended. We are thus using a custom `FlowSection` struct as a replacement.
 
-2. Unable to use NSDiffableDataSource directly for each Identifiable element.
+2. Unable to use NSDiffableDataSource directly for each Identifiable element. Currently, we wrap each element in a HashableWrapper.
 
-3. UIHostingController is not always laying out its SwiftUI view with the correct size. If we scroll the collectionview too quickly, the UIHostingController will have its managed view at a correct size, but its underlying SwiftUI view does NOT occupy the entire view frame. (We can reveal this bug by setting the hostingController's view's background color, and have the cell content be a SwiftUIView with a flexible frame that streches on both width and height.)
+3. UIHostingController is not always laying out its SwiftUI view with the correct size. If we scroll the collectionview too quickly, the UIHostingController will have its managed view at a correct size, but its underlying SwiftUI view does NOT occupy the entire view frame. (We can reveal this bug by setting the hostingController's view's background color, and have the cell content be a SwiftUIView with a flexible frame that streches on both width and height.) This probably have something to do with how Compositional Layout is working: maybe it is first initializing the frame at a different estimate, and then auto layout / frame resetting comes.
+
+4. Xcode Preview is not doing dynamic casting correctly. Thus, we are unable to preview the .frame(width:height:) modifier correctly. It is probably calling makeUIView() more than once, and the last time is not doing the dynamic cast.
 
 
 ### Observations on the Frameworks: ###

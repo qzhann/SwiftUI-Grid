@@ -28,21 +28,22 @@ struct ContentView: View {
     var simpleTestItems: [TemporaryItem] = [TemporaryItem(text: "1")]
     var body: some View {
         Flow(TemporaryItem.testItems) { item in
-            VStack {
-                Text(item.text)
-                //.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .padding()
+            Text(item.text)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .background(Color.yellow)
-            }
+                .border(Color.black, width: 1)
+            .frame(width: .fractionalWidth(0.2), height: .fractionalWidth(0.2))
+            
         }
-        .frame(width: .fractionalWidth(0.2), height: .fractionalWidth(0.2))
-        .edgesIgnoringSafeArea(.all)
+        
+        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environment(\.colorScheme, .dark)
+
+        
     }
 }
