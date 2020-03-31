@@ -3,11 +3,10 @@
 This project creates a Flow struct, which creates a UICollectionView equivalent in SwiftUI.
 
 ### To Do: ###
-1. Parse cellContent to allow SwiftUI view to be displayed in each collection view cell.
-2. Allow .frame(width:height) modifier to be used on each cell in a step 1.
-3. Create different initializers for Flow. Allow Flow to contain ForEach and FlowSection.
-4. Allow .frame(width:height:) modifier to be modified on each cell / ForEach / FlowSection.
-5. Allow Flow to dynamically handle data changes: fluid content changing handling
+1. Allow .frame(width:height) modifier to be used on each cell in a step 1.
+2. Create different initializers for Flow. Allow Flow to contain ForEach and FlowSection.
+3. Allow .frame(width:height:) modifier to be modified on each cell / ForEach / FlowSection.
+4. Allow Flow to dynamically handle data changes: fluid content changing handling
 
 
 
@@ -16,7 +15,7 @@ This project creates a Flow struct, which creates a UICollectionView equivalent 
 
 2. Unable to use NSDiffableDataSource directly for each Identifiable element.
 
-3. UICollectionViewCell probably has incorrect sizing information when dequeued. 
+3. UIHostingController is not always laying out its SwiftUI view with the correct size. If we scroll the collectionview too quickly, the UIHostingController will have its managed view at a correct size, but its underlying SwiftUI view does NOT occupy the entire view frame. (We can reveal this bug by setting the hostingController's view's background color, and have the cell content be a SwiftUIView with a flexible frame that streches on both width and height.)
 
 
 ### Observations on the Frameworks: ###

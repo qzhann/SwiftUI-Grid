@@ -30,19 +30,19 @@ struct ContentView: View {
         Flow(TemporaryItem.testItems) { item in
             VStack {
                 Text(item.text)
+                //.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .padding()
-                .background(Color.blue)
+                .background(Color.yellow)
             }
-            
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                
         }
         .frame(width: .fractionalWidth(0.2), height: .fractionalWidth(0.2))
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.colorScheme, .dark)
     }
 }
