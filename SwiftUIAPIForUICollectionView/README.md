@@ -12,11 +12,11 @@ This project creates a Flow struct, which creates a UICollectionView equivalent 
 ### Problems Encountered: ###
 1. `Section` cannot be extended. We are thus using a custom `FlowSection` struct as a replacement.
 
-2. Unable to use NSDiffableDataSource directly for each Identifiable element. Currently, we wrap each element in a HashableWrapper.
+2. Swift Generics does not allow us to extend an existing protocol. We are thus unable to use NSDiffableDataSource directly for each Identifiable element. We are also unable to interpret the CellContent as our custom protocol, so that instead of effectively using generics, we have to do a dynamic cast to see whether it is a FlowItem that has width and height dimensions specified, and then modifify the collectionview layout on the fly.
 
 3. UIHostingController is not always laying out its SwiftUI view with the correct size. If we scroll the collectionview too quickly, the UIHostingController will have its managed view at a correct size, but its underlying SwiftUI view does NOT occupy the entire view frame. (We can reveal this bug by setting the hostingController's view's background color, and have the cell content be a SwiftUIView with a flexible frame that streches on both width and height.) This probably have something to do with how Compositional Layout is working: maybe it is first initializing the frame at a different estimate, and then auto layout / frame resetting comes.
 
-4. Xcode Preview is not doing dynamic casting correctly. Thus, we are unable to preview the .frame(width:height:) modifier correctly. It is probably calling makeUIView() more than once, and the last time is not doing the dynamic cast.
+4. Xcode Preview is not doing dynamic casting correctly. Thus, we are unable to preview the .frame(width:height:) modifier correctly. But you see a flicker of the correctly view first, and then the wrong view again. Why?
 
 
 ### Observations on the Frameworks: ###
