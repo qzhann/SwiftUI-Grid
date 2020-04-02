@@ -16,17 +16,35 @@ struct Flow<Data, CellContent> where Data: RandomAccessCollection, Data.Element:
                             // Consider using a wrapper class, who will emit changes once its data content willChange.
     var sections = [0]
     var cellContentProvider: (Data.Element) -> CellContent
+    var widthDimension: FlowLayoutDimension
+    var heightDimension: FlowLayoutDimension
     
     // MARK: Initializers
-    /// Initializes a Flow using the specified cell content provider.
+    /// Initializes a` Flow` using a cell content provider that returns a `View`.
     /// - Parameters:
     ///   - data: The collection of identified data that is used to generate the cell content.
-    ///   - flowItem: Supplies a  `View` That will be used to generate the cell content using `FlowLayoutDimension.defaultWidth` and `FlowLayoutDimension.defaultHeight`.
+    ///   - cellContentProvider: Supplies a  `View` That will be used to generate the cell content using `FlowLayoutDimension.defaultWidth` and `FlowLayoutDimension.defaultHeight`.
     public init(_ data: Data, @ViewBuilder cellContentProvider: @escaping (Data.Element) -> CellContent) {
         self.data = data
         self.cellContentProvider = cellContentProvider
+        self.widthDimension = .defaultWidth
+        self.heightDimension = .defaultHeight
     }
     
+}
+
+extension Flow where CellContent: FlowLayoutApplicableView {
+    /// Initializes a `Flow` using a cellContentProvider that returns a `FlowLayoutApplicableView`.
+    /// - Parameters:
+    ///   - data: The collection of identified data that is used to generate the cell content.
+    ///   - cellContentProvider: Supplies a  `FlowLayoutApplicableView` That will be used to generate the cell content using its width and height dimensions.
+    internal init(_ data: Data, @ViewBuilder cellContentProvider: @escaping (Data.Element) -> CellContent) {
+        self.data = data
+        self.cellContentProvider = cellContentProvider
+        let sampleCellContent = self.cellContentProvider(data.first!)
+        self.widthDimension = sampleCellContent.widthDimension
+        self.heightDimension = sampleCellContent.heightDimension
+    }
 }
 
 
@@ -49,10 +67,6 @@ extension Flow: UIViewRepresentable {
     
     /// Creates the UICollectionView and sets up the diffable data source.
     func makeUIView(context: Context) -> UICollectionView {
-        // Setting the correct collection view layout dimensions for the layout
-        let sampleCellContent = self.cellContentProvider(data.first!) as? FlowLayoutApplicable
-        let widthDimension = sampleCellContent?.widthDimension ?? .defaultWidth
-        let heightDimension = sampleCellContent?.heightDimension ?? .defaultHeight
         
         // Creates the UICollectionView
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: createLayout(widthDimension: widthDimension, heightDimension: heightDimension))
