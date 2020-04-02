@@ -16,7 +16,7 @@ This project creates a Flow struct, which creates a UICollectionView equivalent 
 
 3. UIHostingController is not always laying out its SwiftUI view with the correct size. If we scroll the collectionview too quickly, the UIHostingController will have its managed view at a correct size, but its underlying SwiftUI view does NOT occupy the entire view frame. (We can reveal this bug by setting the hostingController's view's background color, and have the cell content be a SwiftUIView with a flexible frame that streches on both width and height.) This probably have something to do with how Compositional Layout is working: maybe it is first initializing the frame at a different estimate, and then auto layout / frame resetting comes.
 
-4. Xcode Preview is not doing dynamic casting correctly. Thus, we are unable to preview the .frame(width:height:) modifier correctly. But you see a flicker of the correctly view first, and then the wrong view again. Why?
+4. Xcode Preview is not calling the correct initializer based on the CellContent's type information. In previews, it defaults to rendering each View as a basic View type. So our CompositionalLayoutApplicableView is considered a simple View type. This bug can be reproduced by setting a color property on different initializers, and setting the collection view's background using that color. Thus, we are unable to p  But you see a flicker of the correctly view first, and then the wrong view again. Why?
 
 
 ### Observations on the Frameworks: ###

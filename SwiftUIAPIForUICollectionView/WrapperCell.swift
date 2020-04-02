@@ -47,6 +47,9 @@ class WrapperCell<Content>: UICollectionViewCell where Content : View {
             groupWrapperView.topAnchor.constraint(equalTo: contentView.topAnchor),
             groupWrapperView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
+            // FIXME: Debugging only
+            //            groupWrapperView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            //            groupWrapperView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ]
         NSLayoutConstraint.activate(layoutContraints!)
         setNeedsLayout()

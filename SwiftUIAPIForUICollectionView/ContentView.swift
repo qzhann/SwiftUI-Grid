@@ -30,8 +30,8 @@ struct ContentView: View {
         Flow(TemporaryItem.testItems) { item in
             Text(item.text)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .background(Color.yellow)
-                .border(Color.black, width: 1)
+//                .background(Color.yellow)
+//                .border(Color.black, width: 1)
                 .frame(width: .fractionalWidth(0.2), height: .fractionalWidth(0.2))
         }
     }
