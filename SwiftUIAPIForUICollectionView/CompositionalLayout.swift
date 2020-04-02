@@ -93,38 +93,3 @@ extension NSCollectionLayoutDimension {
         }
     }
 }
-
-// MARK: - Flow Item
-
-protocol FlowLayoutApplicableView: View {
-    var widthDimension: FlowLayoutDimension { get set }
-    var heightDimension: FlowLayoutDimension { get set }
-}
-
-/// A wrapper around a collection cell, storing its width and height layout dimension information.
-struct FlowItem<Content>: FlowLayoutApplicableView where Content : View {
-    let content: Content
-    var widthDimension: FlowLayoutDimension
-    var heightDimension: FlowLayoutDimension
-
-    init(content: Content, width: FlowLayoutDimension, height: FlowLayoutDimension) {
-        self.content = content
-        self.widthDimension = width
-        self.heightDimension = height
-    }
-
-    var body: some View {
-        content
-    }
-}
-
-extension View {
-
-    /// A view modifier that specifies the layout dimensions in a Flow.
-    /// - Parameters:
-    ///   - width: The width dimension.
-    ///   - height: The height dimension.
-    func frame(width: FlowLayoutDimension, height: FlowLayoutDimension) -> some FlowLayoutApplicableView {
-        FlowItem(content: self, width: width, height: height)
-    }
-}

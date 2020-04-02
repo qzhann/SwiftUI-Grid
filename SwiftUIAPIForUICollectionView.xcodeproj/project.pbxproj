@@ -13,10 +13,11 @@
 		F6780F2F242B1E61009311D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6780F2E242B1E61009311D4 /* Assets.xcassets */; };
 		F6780F32242B1E61009311D4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6780F31242B1E61009311D4 /* Preview Assets.xcassets */; };
 		F6780F35242B1E61009311D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6780F33242B1E61009311D4 /* LaunchScreen.storyboard */; };
-		F6780F3F242B1EC4009311D4 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F3E242B1EC4009311D4 /* Flow.swift */; };
+		F6780F3F242B1EC4009311D4 /* CollectionViewRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F3E242B1EC4009311D4 /* CollectionViewRepresentableView.swift */; };
 		F6780F41242B2C7F009311D4 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F40242B2C7F009311D4 /* CompositionalLayout.swift */; };
 		F6780F802430A2AE009311D4 /* WrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F7F2430A2AE009311D4 /* WrapperCell.swift */; };
 		F6780F822430A6B3009311D4 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F812430A6B3009311D4 /* Helper.swift */; };
+		F6C85F3A2435AAB400036186 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C85F392435AAB400036186 /* Flow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,11 +29,12 @@
 		F6780F31242B1E61009311D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F6780F34242B1E61009311D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F6780F36242B1E61009311D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6780F3E242B1EC4009311D4 /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
+		F6780F3E242B1EC4009311D4 /* CollectionViewRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewRepresentableView.swift; sourceTree = "<group>"; };
 		F6780F40242B2C7F009311D4 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
 		F6780F44242D8C74009311D4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 		F6780F7F2430A2AE009311D4 /* WrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperCell.swift; sourceTree = "<group>"; };
 		F6780F812430A6B3009311D4 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		F6C85F392435AAB400036186 /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +71,8 @@
 				F6780F28242B1E5F009311D4 /* AppDelegate.swift */,
 				F6780F2A242B1E5F009311D4 /* SceneDelegate.swift */,
 				F6780F2C242B1E5F009311D4 /* ContentView.swift */,
-				F6780F3E242B1EC4009311D4 /* Flow.swift */,
+				F6C85F392435AAB400036186 /* Flow.swift */,
+				F6780F3E242B1EC4009311D4 /* CollectionViewRepresentableView.swift */,
 				F6780F7F2430A2AE009311D4 /* WrapperCell.swift */,
 				F6780F40242B2C7F009311D4 /* CompositionalLayout.swift */,
 				F6780F812430A6B3009311D4 /* Helper.swift */,
@@ -161,9 +164,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6780F41242B2C7F009311D4 /* CompositionalLayout.swift in Sources */,
+				F6C85F3A2435AAB400036186 /* Flow.swift in Sources */,
 				F6780F29242B1E5F009311D4 /* AppDelegate.swift in Sources */,
 				F6780F802430A2AE009311D4 /* WrapperCell.swift in Sources */,
-				F6780F3F242B1EC4009311D4 /* Flow.swift in Sources */,
+				F6780F3F242B1EC4009311D4 /* CollectionViewRepresentableView.swift in Sources */,
 				F6780F2B242B1E5F009311D4 /* SceneDelegate.swift in Sources */,
 				F6780F2D242B1E5F009311D4 /* ContentView.swift in Sources */,
 				F6780F822430A6B3009311D4 /* Helper.swift in Sources */,

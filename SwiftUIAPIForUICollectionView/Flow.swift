@@ -2,126 +2,86 @@
 //  Flow.swift
 //  SwiftUIAPIForUICollectionView
 //
-//  Created by Zihan Qi on 3/24/20.
+//  Created by Zihan Qi on 4/1/20.
 //  Copyright © 2020 Zihan Qi. All rights reserved.
 //
 
 import SwiftUI
 
 /// The SwiftUI API for UICollectionView.
-struct Flow<Data, CellContent> where Data: RandomAccessCollection, Data.Element: Identifiable, CellContent: View {
+struct Flow<Data, CellContent>: View where Data : RandomAccessCollection, Data.Element : Identifiable, CellContent : View {
     
-    // MARK: Instance properties
-    var data: Data  // FIXME: Need to find a way to make SwiftUI call updateUIView when the data changes. (@State simply won't compile)
-                            // Consider using a wrapper class, who will emit changes once its data content willChange.
-    var sections = [0]
-    var cellContentProvider: (Data.Element) -> CellContent
-    var widthDimension: FlowLayoutDimension
-    var heightDimension: FlowLayoutDimension
+    var content: CollectionViewRepresentableView<Data, CellContent>
     
-    // MARK: Initializers
-    /// Initializes a` Flow` using a cell content provider that returns a `View`.
+    var body: some View {
+        content
+    }
+    
+    /// Initializes a `Flow` using a cell content provider that returns a `View`.
     /// - Parameters:
     ///   - data: The collection of identified data that is used to generate the cell content.
     ///   - cellContentProvider: Supplies a  `View` That will be used to generate the cell content using `FlowLayoutDimension.defaultWidth` and `FlowLayoutDimension.defaultHeight`.
-    public init(_ data: Data, @ViewBuilder cellContentProvider: @escaping (Data.Element) -> CellContent) {
-        self.data = data
-        self.cellContentProvider = cellContentProvider
-        self.widthDimension = .defaultWidth
-        self.heightDimension = .defaultHeight
+    internal init(_ data: Data, @ViewBuilder cellContentProvider: @escaping (Data.Element) -> CellContent) {
+        self.content = CollectionViewRepresentableView(data, widthDimension: .defaultWidth, heightDimension: .defaultHeight, cellContentProvider: cellContentProvider)
     }
     
 }
 
 extension Flow where CellContent: FlowLayoutApplicableView {
-    /// Initializes a `Flow` using a cellContentProvider that returns a `FlowLayoutApplicableView`.
+    
+    /// Initializes a `Flow` using a cell conten provider that returns a `FlowLayoutApplicableView`, which specifies the width and height layout dimensions.
     /// - Parameters:
     ///   - data: The collection of identified data that is used to generate the cell content.
-    ///   - cellContentProvider: Supplies a  `FlowLayoutApplicableView` That will be used to generate the cell content using its width and height dimensions.
+    ///   - cellContentProvider: Supplies a  `FlowLayoutApplicableView` That will be used to generate the cell content using its specified width and height dimensions.
     internal init(_ data: Data, @ViewBuilder cellContentProvider: @escaping (Data.Element) -> CellContent) {
-        self.data = data
-        self.cellContentProvider = cellContentProvider
-        let sampleCellContent = self.cellContentProvider(data.first!)
-        self.widthDimension = sampleCellContent.widthDimension
-        self.heightDimension = sampleCellContent.heightDimension
+        let sampleCellContent = cellContentProvider(data.first!)
+        let widthDimension = sampleCellContent.widthDimension
+        let heightDimension = sampleCellContent.heightDimension
+        self.content = CollectionViewRepresentableView(data, widthDimension: widthDimension, heightDimension: heightDimension, cellContentProvider: cellContentProvider)
     }
 }
 
+// MARK: - Flow Item
 
+protocol FlowLayoutApplicableView: View {
+    var widthDimension: FlowLayoutDimension { get set }
+    var heightDimension: FlowLayoutDimension { get set }
+}
 
-// MARK: - UIViewRepresentable
+/// A wrapper around a collection cell, storing its width and height layout dimension information.
+struct FlowItem<Content>: FlowLayoutApplicableView where Content : View {
+    let content: Content
+    var widthDimension: FlowLayoutDimension
+    var heightDimension: FlowLayoutDimension
 
-extension Flow: UIViewRepresentable {
-    /// Responsible for storing the collection view diffable data source.
-    class Coordinator: NSObject {
-        var parent: Flow
-        var dataSource: UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>!
-        init(_ parent: Flow) {
-            self.parent = parent
-        }
+    init(content: Content, width: FlowLayoutDimension, height: FlowLayoutDimension) {
+        self.content = content
+        self.widthDimension = width
+        self.heightDimension = height
     }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+
+    var body: some View {
+        content
     }
-    
-    /// Creates the UICollectionView and sets up the diffable data source.
-    func makeUIView(context: Context) -> UICollectionView {
-        
-        // Creates the UICollectionView
-        let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: createLayout(widthDimension: widthDimension, heightDimension: heightDimension))
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        // FIXME: This should respect .background() modifier if it exists
-        collectionView.backgroundColor = .systemBackground
-        collectionView.register(WrapperCell<CellContent>.self, forCellWithReuseIdentifier: kWrapperCellReuseIdentifier)
-        
-        // Sets up the diffable data source and store in the coordinator.
-        context.coordinator.dataSource = UICollectionViewDiffableDataSource<Int, HashableWrapper<Data.Element>>(collectionView: collectionView) { (collectionView, indexPath, dataWrapper) -> UICollectionViewCell? in
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWrapperCellReuseIdentifier, for: indexPath) as? WrapperCell<CellContent> else { fatalError("Could not dequeue cell") }
-            // Sets the content by using the cell content provider on the current model data
-            cell.setContent(self.cellContentProvider(dataWrapper.content))
-            
-            return cell
-        }
-        
-        applyDataSourceSnapshot(context: context, animated: true)
-        
-        return collectionView
-    }
-        
-    /// Apply diffable data source changes. Triggered by change in data (@State).
-    func updateUIView(_ collectionView: UICollectionView, context: Context) {
-        applyDataSourceSnapshot(context: context, animated: true)
-    }
-    
-    /// Creates a simple flow layout using the specified width and height dimensions for each cell.
+}
+
+extension View {
+
+    /// A view modifier that specifies its width and height `FlowLayoutDimension`s. The dimensions will be applied if the modified `View` is wrapped inside of a `Flow`.
     /// - Parameters:
-    ///   - widthDimension: The width dimension for each cell.
-    ///   - heightDimension: The height dimension for each cell.
-    private func createLayout(widthDimension: FlowLayoutDimension, heightDimension: FlowLayoutDimension) -> UICollectionViewLayout {
-        // Each item takes up the entire height in the group and its preferred width.
-        let itemSize = NSCollectionLayoutSize(widthDimension: .equivalent(widthDimension), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        // Each group takes up the entire width in the section and its preferred height.
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .equivalent(heightDimension))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
-    }
-    
-    /// Applies changes in data to the diffable data source.
-    private func applyDataSourceSnapshot(context: Context, animated: Bool) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, HashableWrapper<Data.Element>>()
-        snapshot.appendSections(sections)
-        snapshot.appendItems(data.map { HashableWrapper(content: $0) })
-        context.coordinator.dataSource.apply(snapshot, animatingDifferences: animated)
+    ///   - width: The width dimension.
+    ///   - height: The height dimension.
+    func frame(width: FlowLayoutDimension, height: FlowLayoutDimension) -> some FlowLayoutApplicableView {
+        FlowItem(content: self, width: width, height: height)
     }
 }
 
-
-
+extension Flow {
+    /// A view modifier that specifies the layout dimensions for each item a `Flow`.
+    /// - Parameters:
+    ///   - width: The width dimension.
+    ///   - height: The height dimension.
+    func frame(width: FlowLayoutDimension, height: FlowLayoutDimension) -> some View {
+        CollectionViewRepresentableView(self.content.data, widthDimension: width, heightDimension: height, cellContentProvider: self.content.cellContentProvider)
+    }
+}
