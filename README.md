@@ -1,4 +1,4 @@
 # SwiftUI-CollectionView-API
 A custom built SwiftUI API for UICollectionView.
 
-![SwiftUI CollectionView API Demo.mov](SwiftUI CollectionView API Demo.mov)
+![SwiftUI%20CollectionView%20API%20Demo.mov](SwiftUI%20CollectionView%20API%20Demo.mov)
