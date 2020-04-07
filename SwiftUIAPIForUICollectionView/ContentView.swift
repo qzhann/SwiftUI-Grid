@@ -8,29 +8,16 @@
 
 import SwiftUI
 
-struct TemporaryItem: Identifiable {
-    var id = UUID()
-    var text: String
-    
-    static var testItems: [TemporaryItem] {
-        let numbers = Array(0..<940)
-        return numbers.map { TemporaryItem(text: "\($0)") }
-    }
-    
-    static var simpleTestItems: [TemporaryItem] = [
-        TemporaryItem(text: "1"),
-        TemporaryItem(text: "2"),
-        TemporaryItem(text: "3")
-    ]
+
+var identifiedItems: [TemporaryItem] {
+    let numbers = Array(0..<940)
+    return numbers.map { TemporaryItem(text: "\($0)") }
 }
 
 struct ContentView: View {
     var body: some View {
-        Flow(TemporaryItem.testItems) { item in
+        Flow(identifiedItems) { item in
             Text(item.text)
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .background(Color.yellow)
-                .border(Color.black, width: 1)
                 .frame(width: .fractionalWidth(0.2), height: .fractionalWidth(0.2))
         }
     }
@@ -39,7 +26,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-
-        
     }
 }

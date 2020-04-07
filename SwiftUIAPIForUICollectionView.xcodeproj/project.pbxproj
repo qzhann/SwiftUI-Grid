@@ -18,6 +18,7 @@
 		F6780F802430A2AE009311D4 /* WrapperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F7F2430A2AE009311D4 /* WrapperCell.swift */; };
 		F6780F822430A6B3009311D4 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6780F812430A6B3009311D4 /* Helper.swift */; };
 		F6C85F3A2435AAB400036186 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C85F392435AAB400036186 /* Flow.swift */; };
+		F6C85F9A243C2F8800036186 /* TemporaryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C85F99243C2F8800036186 /* TemporaryItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		F6780F7F2430A2AE009311D4 /* WrapperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperCell.swift; sourceTree = "<group>"; };
 		F6780F812430A6B3009311D4 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		F6C85F392435AAB400036186 /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
+		F6C85F99243C2F8800036186 /* TemporaryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				F6780F44242D8C74009311D4 /* README.md */,
 				F6780F28242B1E5F009311D4 /* AppDelegate.swift */,
 				F6780F2A242B1E5F009311D4 /* SceneDelegate.swift */,
+				F6C85F99243C2F8800036186 /* TemporaryItem.swift */,
 				F6780F2C242B1E5F009311D4 /* ContentView.swift */,
 				F6C85F392435AAB400036186 /* Flow.swift */,
 				F6780F3E242B1EC4009311D4 /* CollectionViewRepresentableView.swift */,
@@ -168,6 +171,7 @@
 				F6780F29242B1E5F009311D4 /* AppDelegate.swift in Sources */,
 				F6780F802430A2AE009311D4 /* WrapperCell.swift in Sources */,
 				F6780F3F242B1EC4009311D4 /* CollectionViewRepresentableView.swift in Sources */,
+				F6C85F9A243C2F8800036186 /* TemporaryItem.swift in Sources */,
 				F6780F2B242B1E5F009311D4 /* SceneDelegate.swift in Sources */,
 				F6780F2D242B1E5F009311D4 /* ContentView.swift in Sources */,
 				F6780F822430A6B3009311D4 /* Helper.swift in Sources */,
